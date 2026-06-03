@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poson AR Experience</title>
+    <!-- Google Model Viewer Library -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        model-viewer {
+            width: 100%;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- AR Model Viewer Component -->
+    <model-viewer 
+        src="mihinthalayatest.usdc" 
+        ar 
+        ar-modes="scene-viewer webxr quick-look" 
+        ar-scale="fixed"
+        camera-controls 
+        disable-zoom 
+        disable-pan
+        alt="Poson Mihinthalaya 3D Model">
+        
+        <button slot="ar-button" style="background-color: white; border-radius: 4px; border: none; position: absolute; top: 16px; right: 16px; padding: 10px 20px; font-weight: bold; cursor: pointer;">
+            View in AR
+        </button>
+    </model-viewer>
+
+</body>
+</html>

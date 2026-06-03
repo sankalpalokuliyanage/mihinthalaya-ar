@@ -22,17 +22,27 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            justify-content: space-between;
+            padding: 40px 0 20px 0;
+        }
+
+        .main-wrapper {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
             justify-content: center;
+            align-items: center;
         }
 
         .glass-card {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 30px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             overflow: hidden;
+            position: relative;
         }
 
         model-viewer {
@@ -45,17 +55,18 @@
             border-radius: 50px;
             padding: 12px 30px;
             font-weight: 600;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
             border: none;
             background: linear-gradient(45deg, #00f2ff, #0066ff);
             color: white;
+            z-index: 20;
         }
 
         .cyber-btn:hover {
             box-shadow: 0 0 20px var(--neon-blue);
-            transform: translateY(-2px);
+            transform: translate(-50%, -2px) !important; /* Preserves the layout position */
         }
 
         #loading-overlay {
@@ -67,21 +78,23 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: rgba(2, 6, 23, 0.8);
+            background: rgba(2, 6, 23, 0.85);
             z-index: 10;
+            transition: opacity 0.5s ease;
         }
 
         .hidden {
             display: none !important;
+            opacity: 0;
         }
 
         /* Footer Style */
         .footer-text {
-            margin-top: 25px;
+            margin-top: 40px;
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.5);
             letter-spacing: 2px;
             text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .dev-name {
@@ -94,8 +107,8 @@
 
 <body>
 
-    <div class="container">
-        <div class="row justify-content-center">
+    <main class="main-wrapper container">
+        <div class="row justify-content-center w-100">
             <div class="col-lg-8 text-center mb-4">
                 <h1 class="display-4 fw-bold">Cyber Vesak <span style="color: var(--neon-blue);">2026</span></h1>
             </div>
@@ -103,21 +116,22 @@
             <div class="col-lg-9 position-relative">
                 <div class="glass-card">
 
-                    <div id="loading-overlay">
+                    <div id="loading-overlay" aria-live="polite">
                         <div class="spinner-border text-info" role="status">
                             <span class="visually-hidden">Loading...</span>
                         </div>
-                        <span class="ms-3">Please wait...</span>
+                        <span class="ms-3">Loading 3D Experience...</span>
                     </div>
 
                     <model-viewer id="mutti-viewer" 
                         src="mihinthalayatest.glb" 
+                        alt="Cyber Vesak 3D Digital Lantern Display"
                         ar 
                         ar-modes="webxr scene-viewer quick-look"
                         camera-controls 
                         auto-rotate 
-                        auto-rotate-delay="0"
-                        rotation-speed="20deg"
+                        rotation-per-second="20deg"
+                        interaction-prompt-delay="0"
                         shadow-intensity="1" 
                         camera-orbit="auto auto auto"
                         interaction-prompt="auto">
@@ -129,28 +143,34 @@
 
                     </model-viewer>
                 </div>
-
-                <div class="text-center">
-                    <p class="footer-text">Developed by <span class="dev-name">Sankalpa Lokuliyanage</span></p>
-                </div>
             </div>
         </div>
-    </div>
+    </main>
+
+    <footer class="text-center w-100">
+        <p class="footer-text">Developed by <span class="dev-name">Sankalpa Lokuliyanage</span></p>
+    </footer>
 
     <script>
         const modelViewer = document.querySelector('#mutti-viewer');
         const loadingOverlay = document.querySelector('#loading-overlay');
 
+        // Asset Initialization Event Hook
         modelViewer.addEventListener('load', () => {
             loadingOverlay.classList.add('hidden');
-            // Force rotation on load
+            // Explicitly verify the rotation vector flags are active
             modelViewer.autoRotate = true;
-            console.log("Model loaded successfully!");
+            console.log("3D Model initialized seamlessly.");
         });
 
+        // Network or Rendering Exception Hook
         modelViewer.addEventListener('error', (error) => {
-            console.error("Error loading model:", error);
-            loadingOverlay.innerHTML = "Error loading 3D model. Please check the file path.";
+            console.error("Critical asset disruption:", error);
+            loadingOverlay.innerHTML = `
+                <div class="text-danger text-center p-4">
+                    <h5>Format/Path Translation Error</h5>
+                    <p class="small text-white-50">Please verify that "mihinthalayatest.glb" is present in your root directory.</p>
+                </div>`;
         });
     </script>
 

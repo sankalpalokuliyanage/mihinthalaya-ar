@@ -80,8 +80,8 @@
 
         .poson-btn:hover {
             box-shadow: 0 0 30px var(--poson-gold);
-            transform: translate(-50%, -4px) !important;
             color: #000;
+            transform: translateY(-4px);
             background: linear-gradient(45deg, var(--poson-gold), #fff);
         }
 
@@ -150,7 +150,7 @@
     <main class="main-wrapper container">
         <div class="row justify-content-center w-100">
             <div class="col-lg-8 text-center mb-4">
-                <h1 class="main-title fw-bold"><span class="poson-text">South Korea</span> Poson <span class="year-text">2026</span></h1>
+                <h1 class="main-title fw-bold"><span class="poson-text">මිහින්තලා</span> පොසොන් <span class="year-text">2026</span></h1>
                 <p class="text-white-50 small text-uppercase tracking-wide" style="letter-spacing: 3px;">Mihintale 3D Digital Spiritual Experience</p>
             </div>
 
@@ -209,10 +209,11 @@
 
         modelViewer.addEventListener('error', (error) => {
             console.error("Asset disruption:", error);
+            const modelSrc = modelViewer.getAttribute('src');
             loadingOverlay.innerHTML = `
                 <div class="text-warning text-center p-5">
-                    <h5 class="fw-bold mb-2">3D Scene Loading Error</h5>
-                    <p class="small text-white-50">Please ensure "mihin_test2.glb" is correctly placed in your project root folder.</p>
+                    <h5 class="fw-bold mb-2">3D මාදිලිය පූරණය කිරීමේ දෝෂයකි</h5>
+                    <p class="small text-white-50 mt-3">"${modelSrc}" ගොනුව සොයා ගැනීමට හෝ පූරණය කිරීමට නොහැකි විය.<br>කරුණාකර ගොනුවේ නම සහ එය නිවැරදි ස්ථානයේ ඇති දැයි තහවුරු කරන්න.</p>
                 </div>`;
         });
     </script>
